@@ -12,7 +12,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0f14'/%3E%3Ccircle cx='32' cy='32' r='15' fill='none' stroke='%23f5b83d' stroke-width='6'/%3E%3Ccircle cx='32' cy='32' r='4' fill='%2337d6b5'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+Bengali:wght@500;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#0b0f14; --bg2:#10161e; --card:#141b25; --line:#223042;
@@ -30,7 +30,20 @@
   header{position:sticky;top:0;z-index:20;background:rgba(11,15,20,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
   nav{display:flex;align-items:center;justify-content:space-between;height:68px}
   .logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.14em;text-decoration:none;font-size:18px}
-  .logo svg{width:30px;height:30px}
+  .logo svg{width:34px;height:34px}
+  .logo-text{display:flex;flex-direction:column;line-height:1.15}
+  .bn{font-family:"Noto Sans Bengali",sans-serif;letter-spacing:0;font-weight:500;font-size:13px;color:var(--amber)}
+  .bn-hero{font-family:"Noto Sans Bengali",sans-serif;font-size:20px;color:var(--amber);margin:-6px 0 16px;font-weight:700}
+
+  /* footer details */
+  .foot-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:36px;padding-bottom:28px;border-bottom:1px solid var(--line);margin-bottom:24px}
+  .foot-grid h5{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:12px;font-weight:600}
+  .foot-grid p, .foot-grid li{font-size:14px;color:var(--mute);line-height:1.7}
+  .foot-grid ul{list-style:none}
+  .foot-grid strong{color:var(--ink);font-weight:600}
+  .foot-brand{font-weight:700;letter-spacing:.12em;color:var(--ink);font-size:16px}
+  @media(max-width:800px){.foot-grid{grid-template-columns:1fr}}
+  footer .bottom{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .links{display:flex;gap:28px;align-items:center}
   .links a{text-decoration:none;color:var(--mute);font-size:15px;transition:color .2s}
   .links a:hover{color:var(--ink)}
@@ -123,7 +136,8 @@
   .contact .cta{justify-content:center}
 
   footer{border-top:1px solid var(--line);padding:34px 0;color:var(--mute);font-size:14px}
-  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  footer .wrap{display:block}
+  footer .bn{display:block}
   footer a{text-decoration:none}
   footer a:hover{color:var(--ink)}
   .fl{display:flex;gap:22px}
@@ -139,7 +153,7 @@
   <nav class="wrap">
     <a class="logo" href="#top" aria-label="Okkodex home">
       <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#141b25"/><circle cx="32" cy="32" r="15" fill="none" stroke="#f5b83d" stroke-width="6"/><circle cx="32" cy="32" r="4" fill="#37d6b5"/></svg>
-      OKKODEX
+      <span class="logo-text">OKKODEX TECH<span class="bn" lang="bn">অকেকোডেক্স টেক</span></span>
     </a>
     <div class="links">
       <a href="#apps">Apps</a>
@@ -156,6 +170,7 @@
     <div class="wrap">
       <div>
         <span class="eyebrow mono">// empowering your tech transformation</span>
+        <div class="bn-hero" lang="bn">অকেকোডেক্স টেক</div>
         <h1>Useful apps.<br><em>Zero</em> nonsense.</h1>
         <p class="lede">Okkodex builds free Android apps for electronics, science, math and the living room. They work offline, have no ads and keep your data on your phone.</p>
         <div class="cta">
@@ -300,7 +315,8 @@
       <h2>Questions, feedback or ideas?</h2>
       <p>Found a bug, want a feature, or interested in working with us? We read every message.</p>
       <div class="cta">
-        <a class="btn btn-amber" href="mailto:okkodex.ai@gmail.com">✉ okkodex.ai@gmail.com</a>
+        <a class="btn btn-amber" href="mailto:okkodex.tech@gmail.com">✉ okkodex.tech@gmail.com</a>
+        <a class="btn btn-ghost" href="tel:+8801788885000">☎ +880 1788-885000</a>
         <a class="btn btn-ghost" href="https://play.google.com/store/apps/developer?id=okkodex" target="_blank" rel="noopener">All apps on Google Play</a>
       </div>
     </div>
@@ -309,8 +325,31 @@
 
 <footer>
   <div class="wrap">
-    <span>© <span id="yr">2026</span> Okkodex. All rights reserved.</span>
-    <div class="fl"><a href="#apps">Apps</a><a href="privacy.html">Privacy policy</a><a href="mailto:okkodex.ai@gmail.com">Contact</a></div>
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">OKKODEX TECH</div>
+        <div class="bn" lang="bn" style="font-size:15px;margin-bottom:10px">অকেকোডেক্স টেক</div>
+        <p>IT business building honest Android apps for learning, tinkering and play.</p>
+      </div>
+      <div>
+        <h5>Office</h5>
+        <p>Sylmart Complex, 2nd Floor,<br>Jail Road, East Zindabazar,<br>Sylhet, Bangladesh</p>
+        <p lang="bn" style="font-family:'Noto Sans Bengali',sans-serif;margin-top:6px">সিলমার্ট কমপ্লেক্স, ২য় তলা, জেল রোড,<br>পূর্ব জিন্দাবাজার, সিলেট</p>
+      </div>
+      <div>
+        <h5>Contact &amp; licence</h5>
+        <ul>
+          <li>✉ <a href="mailto:okkodex.tech@gmail.com">okkodex.tech@gmail.com</a></li>
+          <li>☎ <a href="tel:+8801788885000">+880 1788-885000</a></li>
+          <li>Trade Licence No: <strong>1230054209</strong></li>
+          <li>Sylhet City Corporation</li>
+        </ul>
+      </div>
+    </div>
+    <div class="bottom">
+      <span>© <span id="yr">2026</span> Okkodex Tech. All rights reserved.</span>
+      <div class="fl"><a href="#apps">Apps</a><a href="privacy.html">Privacy policy</a><a href="mailto:okkodex.tech@gmail.com">Contact</a></div>
+    </div>
   </div>
 </footer>
 
