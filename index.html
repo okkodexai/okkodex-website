@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Okkodex — Honest apps for learning, tinkering and play</title>
+<meta name="description" content="Okkodex makes free Android apps for electronics, science, math and everyday life. No ads, no accounts, no tracking.">
+<meta property="og:title" content="Okkodex — Honest apps for learning, tinkering and play">
+<meta property="og:description" content="Free Android apps for electronics, science, math and everyday life. No ads, no accounts, no tracking.">
+<meta property="og:url" content="https://okkodex.com/">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0f14'/%3E%3Ccircle cx='32' cy='32' r='15' fill='none' stroke='%23f5b83d' stroke-width='6'/%3E%3Ccircle cx='32' cy='32' r='4' fill='%2337d6b5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0f14; --bg2:#10161e; --card:#141b25; --line:#223042;
+    --ink:#e9eef4; --mute:#93a1b3; --amber:#f5b83d; --teal:#37d6b5; --coral:#ff7a59;
+    --radius:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Space Grotesk",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+  .mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+
+  /* nav */
+  header{position:sticky;top:0;z-index:20;background:rgba(11,15,20,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.14em;text-decoration:none;font-size:18px}
+  .logo svg{width:30px;height:30px}
+  .links{display:flex;gap:28px;align-items:center}
+  .links a{text-decoration:none;color:var(--mute);font-size:15px;transition:color .2s}
+  .links a:hover{color:var(--ink)}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;font-weight:600;text-decoration:none;font-size:15px;transition:transform .15s, background .2s}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-amber{background:var(--amber);color:#1a1205}
+  .btn-ghost{border:1px solid var(--line);color:var(--ink)}
+  .btn-ghost:hover{background:var(--card)}
+  .links .btn{color:#1a1205;padding:9px 16px}
+  @media(max-width:760px){.links a:not(.btn){display:none}}
+
+  /* hero */
+  .hero{position:relative;overflow:hidden;padding:110px 0 90px}
+  .grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:44px 44px;opacity:.35;mask-image:radial-gradient(ellipse at 70% 40%,#000 0%,transparent 70%)}
+  .hero .wrap{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+  .eyebrow{display:inline-block;font-size:13px;color:var(--teal);border:1px solid rgba(55,214,181,.35);padding:6px 12px;border-radius:999px;margin-bottom:22px}
+  h1{font-size:clamp(40px,6vw,72px);line-height:1.04;letter-spacing:-.025em;font-weight:700}
+  h1 em{font-style:normal;color:var(--amber)}
+  .lede{font-size:19px;color:var(--mute);max-width:560px;margin:24px 0 34px}
+  .cta{display:flex;gap:14px;flex-wrap:wrap}
+  .pledges{display:flex;gap:22px;flex-wrap:wrap;margin-top:40px;font-size:14px;color:var(--mute)}
+  .pledges span::before{content:"✓ ";color:var(--teal);font-weight:700}
+
+  /* hero circuit art */
+  .art{position:relative;aspect-ratio:1/1;max-width:420px;justify-self:center;width:100%}
+  .art svg{width:100%;height:100%}
+  .trace{stroke:var(--line);stroke-width:3;fill:none}
+  .pulse{stroke:var(--amber);stroke-width:3;fill:none;stroke-dasharray:24 400;animation:run 3.2s linear infinite}
+  .pulse.t2{stroke:var(--teal);animation-delay:-1.6s}
+  @keyframes run{to{stroke-dashoffset:-424}}
+  @media(prefers-reduced-motion:reduce){.pulse{animation:none;stroke-dasharray:none;opacity:.5}}
+  .chip-icon{position:absolute;width:76px;height:76px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,.5);border:1px solid var(--line)}
+  @media(max-width:860px){.hero .wrap{grid-template-columns:1fr}.art{max-width:320px}}
+
+  /* sections */
+  section{padding:90px 0}
+  .sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:44px;flex-wrap:wrap}
+  .kicker{font-size:13px;color:var(--amber);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+  h2{font-size:clamp(30px,4vw,44px);letter-spacing:-.02em;line-height:1.1}
+  .sec-head p{color:var(--mute);max-width:440px}
+
+  /* filters */
+  .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+  .chip{background:transparent;border:1px solid var(--line);color:var(--mute);padding:8px 16px;border-radius:999px;font:inherit;font-size:14px;cursor:pointer;transition:all .2s}
+  .chip:hover{color:var(--ink)}
+  .chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+  /* app cards */
+  .apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:22px}
+  .app{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,border-color .2s}
+  .app:hover{transform:translateY(-4px);border-color:#34465e}
+  .app.hide{display:none}
+  .banner{aspect-ratio:832/470;background:#0e141c center/cover no-repeat;border-bottom:1px solid var(--line)}
+  .app-body{padding:22px;display:flex;flex-direction:column;gap:14px;flex:1}
+  .app-top{display:flex;gap:14px;align-items:center}
+  .app-top img{width:56px;height:56px;border-radius:14px;flex:none}
+  .app h3{font-size:19px;line-height:1.25}
+  .tag{font-size:12px;color:var(--teal)}
+  .app p{color:var(--mute);font-size:15px}
+  .feats{list-style:none;display:grid;gap:6px;font-size:14px}
+  .feats li{padding-left:18px;position:relative}
+  .feats li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:2px;background:var(--amber)}
+  .app .btn{margin-top:auto;align-self:flex-start}
+  .gp{width:16px;height:16px}
+
+  /* values */
+  .values{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .vgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  .v{padding:26px;border:1px solid var(--line);border-radius:var(--radius);background:var(--card)}
+  .v .num{font-size:40px;font-weight:700;color:var(--amber);line-height:1}
+  .v h3{margin:14px 0 6px;font-size:18px}
+  .v p{color:var(--mute);font-size:15px}
+  @media(max-width:900px){.vgrid{grid-template-columns:1fr 1fr}}
+  @media(max-width:520px){.vgrid{grid-template-columns:1fr}}
+
+  /* about */
+  .about{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  .about p{color:var(--mute);margin-bottom:16px;font-size:17px}
+  .about p strong{color:var(--ink)}
+  .areas{display:grid;gap:14px}
+  .area{display:flex;gap:16px;align-items:flex-start;padding:18px 20px;border:1px solid var(--line);border-radius:14px}
+  .area .ic{font-size:22px;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--bg2);flex:none}
+  .area h4{font-size:16px}
+  .area span{color:var(--mute);font-size:14px}
+  @media(max-width:860px){.about{grid-template-columns:1fr}}
+
+  /* contact */
+  .contact{text-align:center;background:radial-gradient(ellipse at center,rgba(245,184,61,.12),transparent 70%)}
+  .contact p{color:var(--mute);max-width:560px;margin:16px auto 30px;font-size:17px}
+  .contact .cta{justify-content:center}
+
+  footer{border-top:1px solid var(--line);padding:34px 0;color:var(--mute);font-size:14px}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  footer a{text-decoration:none}
+  footer a:hover{color:var(--ink)}
+  .fl{display:flex;gap:22px}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a class="logo" href="#top" aria-label="Okkodex home">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#141b25"/><circle cx="32" cy="32" r="15" fill="none" stroke="#f5b83d" stroke-width="6"/><circle cx="32" cy="32" r="4" fill="#37d6b5"/></svg>
+      OKKODEX
+    </a>
+    <div class="links">
+      <a href="#apps">Apps</a>
+      <a href="#principles">Principles</a>
+      <a href="#about">About</a>
+      <a class="btn btn-amber" href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="grid-bg"></div>
+    <div class="wrap">
+      <div>
+        <span class="eyebrow mono">// empowering your tech transformation</span>
+        <h1>Useful apps.<br><em>Zero</em> nonsense.</h1>
+        <p class="lede">Okkodex builds free Android apps for electronics, science, math and the living room. They work offline, have no ads and keep your data on your phone.</p>
+        <div class="cta">
+          <a class="btn btn-amber" href="#apps">Explore our apps →</a>
+          <a class="btn btn-ghost" href="https://play.google.com/store/apps/developer?id=okkodex" target="_blank" rel="noopener">View on Google Play</a>
+        </div>
+        <div class="pledges"><span>No ads</span><span>No accounts</span><span>No tracking</span></div>
+      </div>
+      <div class="art" aria-hidden="true">
+        <svg viewBox="0 0 400 400">
+          <path class="trace" d="M40 80 H200 V200 H360"/>
+          <path class="trace" d="M40 320 H140 V200 H200"/>
+          <path class="trace" d="M200 40 V120 M280 200 V360 H120"/>
+          <path class="pulse" d="M40 80 H200 V200 H360"/>
+          <path class="pulse t2" d="M40 320 H140 V200 H200 V40"/>
+          <circle cx="200" cy="200" r="10" fill="#f5b83d"/>
+          <circle cx="40" cy="80" r="6" fill="#37d6b5"/><circle cx="40" cy="320" r="6" fill="#37d6b5"/>
+          <circle cx="360" cy="200" r="6" fill="#ff7a59"/><circle cx="120" cy="360" r="6" fill="#ff7a59"/>
+        </svg>
+        <img class="chip-icon" style="left:6%;top:30%" src="https://play-lh.googleusercontent.com/GcPXsR1QKK8BuB-yCPNcZtTiDwLaELpFTPgecxs6xYkmlzMzgKyZiBkpte0tz_Lgtpf1trlS5Ob26Tj7a6UMHXg=s256-rw" alt="">
+        <img class="chip-icon" style="right:4%;top:6%" src="https://play-lh.googleusercontent.com/7R3Rt2KaYd8V5srDQlauXqScVbFvQdTyfKwUubuU2f0UfYPqkxmpOYIokK-rFpKNQ4BXF_xjEIFwRpP7dcOALyY=s256-rw" alt="">
+        <img class="chip-icon" style="right:10%;bottom:6%" src="https://play-lh.googleusercontent.com/f7zkclzbGcN_yLdHqbGkxOzdd8c68QdiVdnRWxgG3-6zkSWWv6zvKel7vZ1dUhC_kLgvEIez-HQOUGUyktIr=s256-rw" alt="">
+      </div>
+    </div>
+  </section>
+
+  <section id="apps">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><div class="kicker mono">Our apps</div><h2>Six apps, one idea:<br>respect the user.</h2></div>
+        <p>Every Okkodex app is free on Google Play. Pick a category or browse them all.</p>
+      </div>
+      <div class="filters" role="group" aria-label="Filter apps">
+        <button class="chip on" data-f="all">All</button>
+        <button class="chip" data-f="electronics">Electronics</button>
+        <button class="chip" data-f="learning">Learning</button>
+        <button class="chip" data-f="games">Puzzles &amp; games</button>
+        <button class="chip" data-f="tools">Everyday tools</button>
+      </div>
+
+      <div class="apps">
+        <article class="app reveal" data-c="electronics learning games">
+          <div class="banner" style="background-image:url('https://play-lh.googleusercontent.com/qReGDUhPDqtzfXR2swZcgQyHVr5mUFnCI_WbOGyxeJeaKxs4BX9f9-noORnc1w8L6XJbECUzY7HoMo4U9yGYtw=w832-h470-rw')"></div>
+          <div class="app-body">
+            <div class="app-top"><img src="https://play-lh.googleusercontent.com/7R3Rt2KaYd8V5srDQlauXqScVbFvQdTyfKwUubuU2f0UfYPqkxmpOYIokK-rFpKNQ4BXF_xjEIFwRpP7dcOALyY=s128-rw" alt="Circuit Game icon"><div><h3>Circuit Game</h3><div class="tag mono">Educational · Puzzle</div></div></div>
+            <p>Build real circuits, press RUN and see what happens. Every board is simulated, so a circuit that works here works on a real bench.</p>
+            <ul class="feats"><li>6,500+ levels and 2,080 quiz questions</li><li>A coach that names every fault and how to fix it</li><li>Circuit, Fault, Meter, Part Golf and Thévenin labs</li></ul>
+            <a class="btn btn-ghost" href="https://play.google.com/store/apps/details?id=com.okkodex.circuitgame" target="_blank" rel="noopener">Get it on Google Play →</a>
+          </div>
+        </article>
+
+        <article class="app reveal" data-c="electronics tools">
+          <div class="banner" style="background-image:url('https://play-lh.googleusercontent.com/10spu3oLXPmiPiHBtWql7dZ7raFZolvbHncAZDw2LSF2GyJdbkmADaeIIYiahoaiQ4xF3HF4XVpqPovQlTdESg=w832-h470-rw')"></div>
+          <div class="app-body">
+            <div class="app-top"><img src="https://play-lh.googleusercontent.com/GcPXsR1QKK8BuB-yCPNcZtTiDwLaELpFTPgecxs6xYkmlzMzgKyZiBkpte0tz_Lgtpf1trlS5Ob26Tj7a6UMHXg=s128-rw" alt="IC Dictionary icon"><div><h3>IC Dictionary: Chip Pinouts</h3><div class="tag mono">Electronics reference</div></div></div>
+            <p>An offline IC pinout and datasheet reference for engineers, students, technicians and makers. Look up any chip in seconds.</p>
+            <ul class="feats"><li>2,500+ components across 21 categories</li><li>Part-number decoder, glossary and package guide</li><li>8,000+ electronics quiz questions</li></ul>
+            <a class="btn btn-ghost" href="https://play.google.com/store/apps/details?id=com.okkodex.icdictionary" target="_blank" rel="noopener">Get it on Google Play →</a>
+          </div>
+        </article>
+
+        <article class="app reveal" data-c="electronics tools learning">
+          <div class="banner" style="background-image:url('https://play-lh.googleusercontent.com/TJsxXy8rEitTXOyRXouYT3q3EupPBpccR9r3QanR-FmLVYd1eZdM0W8eZseWC1glhw8v8GUX0UJHGNuxV82Img=w832-h470-rw')"></div>
+          <div class="app-body">
+            <div class="app-top"><img src="https://play-lh.googleusercontent.com/eYXanmZQRYWLJgyGqWYMgBkqc-5B_552lne2YswfHjzo64pNlJ8ArQ6GzpfCvoLex3kgxV7h7fDkHMLC88563Q=s128-rw" alt="Resistor color code calculator icon"><div><h3>Resistor Color Code Calculator</h3><div class="tag mono">Electronics tool</div></div></div>
+            <p>Decode any resistor from its color bands or SMD code, or find the bands for any value. A complete bench tool that works offline.</p>
+            <ul class="feats"><li>3, 4, 5 and 6-band resistors, plus reverse lookup</li><li>SMD codes: 3-digit, 4-digit, EIA-96 and R notation</li><li>Quiz with spaced repetition and a daily challenge</li></ul>
+            <a class="btn btn-ghost" href="https://play.google.com/store/apps/details?id=com.okkodex.resistorcolorcode" target="_blank" rel="noopener">Get it on Google Play →</a>
+          </div>
+        </article>
+
+        <article class="app reveal" data-c="learning games">
+          <div class="banner" style="background-image:url('https://play-lh.googleusercontent.com/jay40sQptGeCCHRNeuooqQoeNth0nnjj9IzrMePv-ImgNebW3H-vWBx2F60SoyFLaWNcD4jKSVXyaYaXjLCw-w=w832-h470-rw')"></div>
+          <div class="app-body">
+            <div class="app-top"><img src="https://play-lh.googleusercontent.com/ZQYrRQJHwBdiwbu0tU2Rz7F8IlroeM4xAA9jHKgHAW952VOUiMeAW78SuKpukfd9M-wkb_7cMdQgM1tuDyyrKw=s128-rw" alt="Periodic Table icon"><div><h3>Periodic Table: Quiz &amp; Learn</h3><div class="tag mono">Chemistry · Education</div></div></div>
+            <p>Learn all 118 elements by playing: symbols, atomic numbers, mass and electron configurations, in short rounds that adapt to you.</p>
+            <ul class="feats"><li>12 games, from Elementle to Compound Lab</li><li>Spaced repetition and a mastery chart</li><li>Dyslexia-friendly type and colour-blind glyphs</li></ul>
+            <a class="btn btn-ghost" href="https://play.google.com/store/apps/details?id=com.okkodex.periodictablegame" target="_blank" rel="noopener">Get it on Google Play →</a>
+          </div>
+        </article>
+
+        <article class="app reveal" data-c="games learning">
+          <div class="banner" style="background-image:url('https://play-lh.googleusercontent.com/p7vkmzw5ZCdtbvxSQid_ZVrbAY65agitQ1e5hJ9tysLjkSxm9Cu8OONXOVOu-ODsFfUR_n04d6HUOwrX8rpIv68=w832-h470-rw')"></div>
+          <div class="app-body">
+            <div class="app-top"><img src="https://play-lh.googleusercontent.com/f7zkclzbGcN_yLdHqbGkxOzdd8c68QdiVdnRWxgG3-6zkSWWv6zvKel7vZ1dUhC_kLgvEIez-HQOUGUyktIr=s128-rw" alt="Mental Math Game icon"><div><h3>Mental Math Game</h3><div class="tag mono">Puzzle · Brain training</div></div></div>
+            <p>16 math puzzles and brain games in one app, from Sudoku and KenKen to Make 24 and 2048. Play offline with nothing to buy.</p>
+            <ul class="feats"><li>155,000 levels from Easy to Expert</li><li>Five new daily puzzles and monthly trophies</li><li>Duels against bots or Pass &amp; Play with a friend</li></ul>
+            <a class="btn btn-ghost" href="https://play.google.com/store/apps/details?id=com.okkodex.mathgames" target="_blank" rel="noopener">Get it on Google Play →</a>
+          </div>
+        </article>
+
+        <article class="app reveal" data-c="tools">
+          <div class="banner" style="background-image:url('https://play-lh.googleusercontent.com/BdqH-dtwV08Qw5PJtOnRgH9aWIr6qrNO_r9ihibDFzpqoUebe5oMXFrSL1snLjiEeaGjp6_nqV9r-JqwpALf6w=w832-h470-rw')"></div>
+          <div class="app-body">
+            <div class="app-top"><img src="https://play-lh.googleusercontent.com/8tQXEz_4cDn5U06QwiOuY_dHKuqp_zDlcyEeD54-oUZQ19o08ZxkaAFG_cflbU8KqsSdKoBMrL8roK1fAm1Z=s128-rw" alt="Android TV Remote icon"><div><h3>Android TV Remote</h3><div class="tag mono">Tools · Smart home</div></div></div>
+            <p>Turn your phone into a TV remote for Android TV and Google TV. It also works with Fire TV, Samsung, LG and Roku, over your own Wi‑Fi.</p>
+            <ul class="feats"><li>Touchpad, keyboard, voice search and air mouse</li><li>Every TV in your home in one list</li><li>Widget, lock-screen remote and one-tap macros</li></ul>
+            <a class="btn btn-ghost" href="https://play.google.com/store/apps/details?id=com.okkodex.remoteatv" target="_blank" rel="noopener">Get it on Google Play →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="principles" class="values">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><div class="kicker mono">Principles</div><h2>What we promise in every app</h2></div>
+        <p>These aren't marketing lines. They're the rules we build to, and the Play Store data-safety labels back them up.</p>
+      </div>
+      <div class="vgrid">
+        <div class="v reveal"><div class="num mono">0</div><h3>Ads</h3><p>No banners, no pop-ups, no "watch a video to continue".</p></div>
+        <div class="v reveal"><div class="num mono">0</div><h3>Accounts</h3><p>Open the app and start. No sign-up, no email, no password.</p></div>
+        <div class="v reveal"><div class="num mono">0</div><h3>Data collected</h3><p>Your progress stays on your phone. Nothing is shared with third parties.</p></div>
+        <div class="v reveal"><div class="num mono">∞</div><h3>Offline use</h3><p>Learn and play anywhere, with or without signal.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap about">
+      <div class="reveal">
+        <div class="kicker mono">About Okkodex</div>
+        <h2>Software that earns its place on your phone.</h2>
+        <br>
+        <p>Okkodex is a small, independent software studio. We make apps we'd want to use ourselves: <strong>focused, fast and honest</strong> about what they do.</p>
+        <p>Most of our work sits where <strong>learning meets doing</strong>. You can simulate a circuit before you solder it, decode a chip on the workbench, or master the periodic table one short round at a time.</p>
+        <p>We build every app to be accessible, with dark themes, screen-reader labels, colour-blind modes and adjustable text, because good tools should work for everyone.</p>
+      </div>
+      <div class="areas reveal">
+        <div class="area"><div class="ic">⚡</div><div><h4>Electronics</h4><span>Circuit simulation, IC pinouts, resistor codes</span></div></div>
+        <div class="area"><div class="ic">🧪</div><div><h4>Science education</h4><span>Chemistry games and adaptive quizzes</span></div></div>
+        <div class="area"><div class="ic">🧩</div><div><h4>Puzzles &amp; brain training</h4><span>Math games with fair, logic-solvable puzzles</span></div></div>
+        <div class="area"><div class="ic">📺</div><div><h4>Everyday tools</h4><span>Smart-TV control that respects your privacy</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap reveal">
+      <div class="kicker mono">Get in touch</div>
+      <h2>Questions, feedback or ideas?</h2>
+      <p>Found a bug, want a feature, or interested in working with us? We read every message.</p>
+      <div class="cta">
+        <a class="btn btn-amber" href="mailto:okkodex.ai@gmail.com">✉ okkodex.ai@gmail.com</a>
+        <a class="btn btn-ghost" href="https://play.google.com/store/apps/developer?id=okkodex" target="_blank" rel="noopener">All apps on Google Play</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> Okkodex. All rights reserved.</span>
+    <div class="fl"><a href="#apps">Apps</a><a href="privacy.html">Privacy policy</a><a href="mailto:okkodex.ai@gmail.com">Contact</a></div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  // filters
+  const chips = document.querySelectorAll('.chip');
+  chips.forEach(c => c.addEventListener('click', () => {
+    chips.forEach(x => x.classList.remove('on')); c.classList.add('on');
+    const f = c.dataset.f;
+    document.querySelectorAll('.app').forEach(a => {
+      a.classList.toggle('hide', f !== 'all' && !a.dataset.c.split(' ').includes(f));
+      a.classList.add('in');
+    });
+  }));
+  // reveal on scroll
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold: .12});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
